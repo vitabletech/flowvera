@@ -23,7 +23,7 @@ The existing visual design is retained with clearer hero actions, visible contac
 
 The fixed navigation sits outside the hero's isolated stacking layer and main content, keeping the header and its desktop/mobile menus above images, videos and animated sections when scrolling.
 
-The process preview has a keyboard-accessible play button that plays the supplied water treatment overview inline with native video controls, without an extra video selector or file link below it. It does not autoplay on page load or preload the overview MP4. Playback/load errors are shown explicitly; a direct video-file link appears only if playback fails. The full video remains visible without cropping on mobile.
+The supplied water treatment overview automatically plays muted and loops when at least 15% of its frame is visible, pauses when scrolled out of view or the browser tab is hidden, and resumes from the same position when visible again. Native video controls allow sound and manual pausing; a manual pause remains paused when scrolling away and back. Reduced-motion preferences disable automatic startup, with a keyboard-accessible play button available instead. The overview uses `preload="none"` until playback is requested. Playback/load errors are shown explicitly; a direct video-file link appears only if playback fails. The full video remains visible without cropping on mobile.
 
 The floating WhatsApp button and contact shortcut use the same inline phone-in-bubble logo, with no external icon request.
 
