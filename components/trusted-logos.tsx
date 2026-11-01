@@ -4,7 +4,6 @@ import Image from "next/image";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { assetPath } from "@/lib/asset-path";
 import { useCarousel } from "@/components/use-carousel";
-import { CarouselPause } from "@/components/carousel-pause";
 
 const logos = [
   { file: "Rectangle 63.png", name: "CodeLine" },
@@ -44,11 +43,6 @@ export function TrustedLogos() {
         <div className="carousel-dots" role="group" aria-label="Choose trusted industry logo group">
           {pages.map((_, dot) => <button key={dot} className={`carousel-dot${index === dot ? " active" : ""}`} type="button" aria-label={`Show trusted logo group ${dot + 1}`} aria-current={index === dot ? "true" : undefined} onClick={() => setIndex(dot)} />)}
         </div>
-        <div className="carousel-arrows">
-          <button type="button" aria-label="Previous trusted logos" onClick={previous}><ArrowLeft size={16} /></button>
-          <button type="button" aria-label="Next trusted logos" onClick={next}><ArrowRight size={16} /></button>
-        </div>
-        <CarouselPause paused={paused} reducedMotion={reducedMotion} onClick={togglePaused} label="trusted logos" />
       </div>
     </div>
   );

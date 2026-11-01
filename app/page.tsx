@@ -32,7 +32,6 @@ function Hero() {
         Your browser does not support embedded video.
       </video>
       <div className="hero-shade" />
-      <SiteHeader />
       <div className="hero-content">
         <h1>Pure water for industries and life</h1>
         <p>RO membranes, speciality chemicals and water treatment systems</p>
@@ -187,6 +186,7 @@ export default function HomePage() {
   return (
     <>
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationData).replace(/</g, "\\u003c") }} />
+    <SiteHeader />
     <main id="main-content" tabIndex={-1}>
       <Hero />
       <AboutSection />

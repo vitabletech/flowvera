@@ -4,7 +4,6 @@ import Image from "next/image";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { assetPath } from "@/lib/asset-path";
 import { useLoopingCarousel } from "@/components/use-looping-carousel";
-import { CarouselPause } from "@/components/carousel-pause";
 
 const gallery = [
   { src: assetPath("/assets/optimized/project-water-softener.webp"), alt: "FlowVera water softener systems" },
@@ -39,15 +38,6 @@ export function GalleryCarousel() {
             />
           ))}
         </div>
-        <div className="carousel-arrows">
-          <button type="button" aria-label="Previous project images" onClick={previous}>
-            <ArrowLeft size={16} />
-          </button>
-          <button type="button" aria-label="Next project images" onClick={next}>
-            <ArrowRight size={16} />
-          </button>
-        </div>
-        <CarouselPause paused={paused} reducedMotion={reducedMotion} onClick={togglePaused} label="gallery" />
       </div>
     </div>
   );
