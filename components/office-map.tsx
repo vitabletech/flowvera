@@ -1,12 +1,12 @@
 const mapWidth = 464;
 const mapHeight = 290;
-const origin = { x: 66, y: 48 };
+const origin = { x: 83.5, y: 52 };
 const branches = [
-  { name: "JEDDAH", x: 22, y: 76, curve: "C240 136 170 180" },
-  { name: "RIYADH", x: 52, y: 66, curve: "C286 152 265 170" },
-  { name: "JUBAIL", x: 72, y: 28, curve: "C317 120 326 99" },
-  { name: "DAMMAM", x: 83, y: 22, curve: "C350 117 385 92" },
-  { name: "AL HASA", x: 78, y: 78, curve: "C324 173 338 206" }
+  { name: "JEDDAH", x: 25, y: 70, curve: "C285 118 165 145" },
+  { name: "RIYADH", x: 54.5, y: 61, curve: "C350 135 300 145" },
+  { name: "JUBAIL", x: 55.8, y: 27, curve: "C364 113 305 80" },
+  { name: "DAMMAM", x: 90.3, y: 13, curve: "C426 110 421 75" },
+  { name: "AL HASA", x: 71, y: 83, curve: "C373 191 353 220" }
 ];
 
 const routes = branches.map((branch) =>
@@ -17,6 +17,7 @@ export function OfficeMap() {
   return (
     <div className="presence-card">
       <div className="presence-glow" />
+      <div className="presence-rings" aria-hidden="true"><span /><span /><span /></div>
       <div className="presence-heading">
         <p>ACROSS THE KINGDOM</p>
         <h2>OUR PRESENCE</h2>
@@ -27,6 +28,9 @@ export function OfficeMap() {
           <g className="grid-lines">
             <path d="M0 36H464M0 76H464M0 116H464M0 156H464M0 196H464M0 236H464M0 276H464" />
             <path d="M42 0V290M96 0V290M150 0V290M204 0V290M258 0V290M312 0V290M366 0V290M420 0V290" />
+          </g>
+          <g className="origin-rings">
+            {[36, 64, 92].map(radius => <circle key={radius} cx={origin.x * mapWidth / 100} cy={origin.y * mapHeight / 100} r={radius} />)}
           </g>
           <g className="route-lines">
             {routes.map((path) => (

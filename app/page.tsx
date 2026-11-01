@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight, Check, Mail, Phone, MapPin } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Check, Mail, Phone } from "lucide-react";
 import { WhatsAppIcon } from "@/components/whatsapp-icon";
 import { SiteHeader } from "@/components/site-header";
 import { Reveal } from "@/components/reveal";
@@ -11,6 +11,8 @@ import { OfficeMap } from "@/components/office-map";
 import { TrustedLogos } from "@/components/trusted-logos";
 import { assetPath } from "@/lib/asset-path";
 import { organizationData } from "@/lib/seo";
+import { SiteFooter } from "@/components/site-footer";
+import { serviceHref } from "@/lib/services";
 
 function Hero() {
   return (
@@ -29,8 +31,8 @@ function Hero() {
         <h1>Pure water for industries and life</h1>
         <p>RO membranes, speciality chemicals and water treatment systems</p>
         <div className="hero-actions">
-          <Link className="button button-primary" href="#contact">Request a quotation <ArrowUpRight size={17} aria-hidden="true" /></Link>
-          <Link className="button button-outline" href="#services">Explore our solutions <ArrowRight size={17} aria-hidden="true" /></Link>
+          <Link className="button button-primary" href="/enquiry/">Request a quotation <ArrowUpRight size={17} aria-hidden="true" /></Link>
+          <Link className="button button-outline" href="/products/">Explore our solutions <ArrowRight size={17} aria-hidden="true" /></Link>
         </div>
       </div>
     </section>
@@ -72,7 +74,7 @@ function ServiceSection() {
     <section className="services-section" id="services">
       <div className="section-heading">
         <Reveal><h2 className="section-title">Solutions for Every Stage.</h2></Reveal>
-        <Link href="#contact" className="all-services">Find the right solution <ArrowRight size={15} aria-hidden="true" /></Link>
+        <Link href="/products/" className="all-services">View all Products &amp; Services <ArrowRight size={15} aria-hidden="true" /></Link>
       </div>
       <ServicesCarousel />
     </section>
@@ -81,7 +83,7 @@ function ServiceSection() {
 
 function GallerySection() {
   return (
-    <section className="gallery-section">
+    <section className="gallery-section" id="projects">
       <Reveal><h2 className="section-title">A Look at What We Do.</h2></Reveal>
       <GalleryCarousel />
     </section>
@@ -103,7 +105,7 @@ function ChemicalsSection() {
             <li>Acidic Cleaner</li>
           </ul>
           <p className="more-chemicals">and more...!</p>
-          <Link className="button button-primary" href="#contact">Ask about chemicals <ArrowUpRight size={15} aria-hidden="true" /></Link>
+          <Link className="button button-primary" href={serviceHref("specialty-chemicals")}>Explore More <ArrowUpRight size={15} aria-hidden="true" /></Link>
         </Reveal>
         <Reveal className="chemicals-image" direction="right">
           <Image
@@ -161,6 +163,10 @@ function ContactSection() {
           <a href="tel:+966508607349">+966 50 860 7349</a>
           <p>For a quotation, share your water source, required capacity and project location.</p>
         </div>
+        <div className="request-actions">
+          <Link className="button button-primary" href="/enquiry/">Request a quotation</Link>
+          <Link className="button button-secondary" href="/book-demo/">Book a demo</Link>
+        </div>
       </Reveal>
       <Reveal direction="right"><OfficeMap /></Reveal>
     </section>
@@ -179,50 +185,6 @@ function CallToAction() {
   );
 }
 
-function Footer() {
-  return (
-    <footer className="site-footer">
-      <div className="footer-main">
-        <div className="footer-brand-col">
-          <Link className="footer-brand" href="#home" aria-label="FlowVera home">
-            <Image src={assetPath("/assets/optimized/flowvera-logo.webp")} alt="FlowVera" fill sizes="194px" />
-          </Link>
-          <p>Looking for the right water treatment solution? FlowVera brings together the products, expertise and support to help you get started.</p>
-          <div className="certifications"><span>ISO 9001:2015</span><span>NSF/ANSI Certified</span></div>
-        </div>
-        <div className="footer-links-group">
-          <div className="footer-col">
-            <h2>Quick Links</h2>
-            <Link href="#home">Home</Link>
-            <Link href="#about">About Us</Link>
-            <Link href="#chemicals">Specialty Chemicals</Link>
-            <Link href="#contact">Contact Us</Link>
-            <Link href="#contact">Book Demo</Link>
-          </div>
-          <div className="footer-col product-col">
-            <h2>Product &amp; Services</h2>
-            <Link href="#services">Water Treatment Plants &amp; Systems</Link>
-            <Link href="#services">RO Maintenance &amp; Technical Services</Link>
-            <Link href="#services">Membranes, Filtration &amp; Ion Exchange</Link>
-            <Link href="#services">Pumps, Dosing &amp; Automation Systems</Link>
-            <Link href="#services">Industrial Tanks &amp; Storage Solutions</Link>
-          </div>
-          <div className="footer-col operations-col">
-            <h2>OPERATIONS DESK</h2>
-            <p><MapPin size={14} aria-hidden="true" />Industrial District, Gate 4 Process Engineering Hub Water Sector North</p>
-            <a href="tel:+966508607349"><Phone size={14} />+966 508607349</a>
-            <a href="mailto:info@flowveraarabia.com"><Mail size={14} />info@flowveraarabia.com</a>
-          </div>
-        </div>
-      </div>
-      <div className="footer-bottom">
-        <p>© {new Date().getFullYear()} FlowVera. All rights reserved.</p>
-        <div><Link href="#home">Back to top <ArrowUpRight size={14} aria-hidden="true" /></Link></div>
-      </div>
-    </footer>
-  );
-}
-
 export default function HomePage() {
   return (
     <>
@@ -238,7 +200,7 @@ export default function HomePage() {
       <CallToAction />
       <ContactSection />
     </main>
-      <Footer />
+      <SiteFooter />
       <a className="floating-whatsapp" href="https://wa.me/966508607349" target="_blank" rel="noreferrer" aria-label="Chat with FlowVera on WhatsApp">
         <WhatsAppIcon size={26} />
       </a>

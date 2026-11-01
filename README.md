@@ -19,7 +19,9 @@ The source images remain in `assets/`. The site uses high-quality WebP delivery 
 
 ## UI, accessibility and SEO
 
-The existing visual design is retained with clearer hero actions, visible contact details, keyboard focus indicators, a skip link, larger carousel controls and tablet/mobile navigation. Carousels are manually controlled so visitors can read at their own pace. The process dialog contains keyboard focus, closes with Escape and restores focus. Section content is visible before JavaScript loads.
+The existing visual design is retained with clearer hero actions, visible contact details, keyboard focus indicators, a skip link, larger carousel controls and tablet/mobile navigation. The header has an outlined quotation action and a keyboard-accessible product dropdown. All three carousels auto-rotate every 4.2 seconds while visible, pause on mouse hover, keyboard focus or dragging, and support mouse dragging and touch swiping alongside arrows/dots. A pause/resume button provides persistent control. Autoplay stops for reduced-motion preferences, hidden browser tabs and offscreen sliders. Vertical touch scrolling is preserved; dragging a service card does not open its product link. Service cards retain the next-card preview and bring it into view when focused. Section content is visible before JavaScript loads.
+
+The process preview plays the water treatment overview inline on click with native video controls, without an extra video selector or file link below it. It does not autoplay on page load or preload MP4 files. Playback/load errors are shown explicitly; a direct video-file link appears only if playback fails.
 
 The floating WhatsApp button and contact shortcut use the same inline phone-in-bubble logo, with no external icon request.
 
@@ -31,6 +33,16 @@ Once DNS and a valid TLS certificate are active, set `SITE_URL=https://www.flowv
 
 Validation uses `npm run lint`, `npx tsc --noEmit`, `npm run build` and browser checks of mobile/desktop layout, keyboard navigation, reduced motion and generated metadata. No unit-test tooling is included.
 
+## Products, requests and legal pages
+
+`/products/` lists six solution categories. Each `/products/[slug]/` page has application details, useful information to share and a product-specific enquiry form. The header, service cards, chemicals action and footer use the same catalog in `lib/services.ts`.
+
+`/enquiry/` prepares general quotations; `/book-demo/` collects a solution, contact information and optional preferred date/time. Requests are previews only: the user must open WhatsApp or their email app and finish sending. Demo dates are not confirmed bookings. The site has no submission backend, request storage, automated confirmations or calendar integration. Inputs are held in page memory only and forms remain disabled until JavaScript is ready to prevent accidental native GET submissions. Editing invalidates the prepared message. No personal information is sent during validation; WhatsApp/email URLs contain the entered text only when the user chooses those channels.
+
+`/terms/` and `/privacy/` contain original **draft** website policies, clearly marked as unapproved and without an effective date. Business/legal review is required, including legal identity, deployed hosting practices, retention, applicable law and certification/address claims. These pages are `noindex` and excluded from the XML sitemap until approved; do not treat them as final legal advice. When publishing approved text, remove the draft notices, change their metadata to indexable and include them in `app/sitemap.ts`.
+
+`/site-map/` is the visible HTML sitemap linked from every footer. `/sitemap.xml` includes the homepage, product index, six product detail pages, enquiry, demo and HTML sitemap with production canonical URLs. Each page has its own title, description, canonical and sharing metadata.
+
 ## Office network animation
 
-The presence map keeps its existing layout, with glowing location dots and staggered moving pixels following the dotted connections from Al Khobar to every branch. Route endpoints and markers share the same coordinates so they stay aligned on desktop and mobile. Reduced-motion preferences disable travelling pixels and marker pulses while keeping all locations and connections visible.
+The presence map uses reference-aligned branch positions and decorative rings, with glowing location dots and staggered moving pixels following the dotted connections from Al Khobar to every branch. Route endpoints and markers share the same coordinates so they stay aligned on desktop and mobile. Reduced-motion preferences disable travelling pixels and marker pulses while keeping all locations and connections visible.

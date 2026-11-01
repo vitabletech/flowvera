@@ -2,8 +2,9 @@
 
 import Image from "next/image";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { useState } from "react";
 import { assetPath } from "@/lib/asset-path";
+import { useCarousel } from "@/components/use-carousel";
+import { CarouselPause } from "@/components/carousel-pause";
 
 const logos = [
   { file: "Rectangle 63.png", name: "CodeLine" },
@@ -26,19 +27,18 @@ const pages = [0, 4, 8].map((start) =>
 );
 
 export function TrustedLogos() {
-  const [index, setIndex] = useState(0);
-
-  const next = () => setIndex((current) => (current + 1) % pages.length);
-  const previous = () => setIndex((current) => (current + pages.length - 1) % pages.length);
+  const { index, setIndex, next, previous, dragOffset, dragging, regionProps, swipeProps, stopped, paused, reducedMotion, togglePaused } = useCarousel(pages.length - 1);
 
   return (
-    <div className="trusted-slider" role="region" aria-roledescription="carousel" aria-label="Industry brands">
-      <div className="client-logos" aria-live="polite">
-        {pages[index].map((logo, position) => (
-          <div className="client-logo" key={`${index}-${logo.name}-${position}`}>
-            <Image src={assetPath(`/assets/Trusted Industry - Logo/${logo.file}`)} alt={logo.name} fill sizes="(max-width: 680px) 44vw, (max-width: 1024px) 29vw, 180px" />
-          </div>
-        ))}
+    <div {...regionProps} className="trusted-slider" role="region" aria-roledescription="carousel" aria-label="Industry brands">
+      <div {...swipeProps} className={"logos-window carousel-swipe" + (dragging ? " is-dragging" : "")}>
+        <div className="client-logos" aria-live={stopped ? "polite" : "off"} style={{ transform: `translateX(${dragOffset}px)`, transition: dragging ? "none" : undefined }}>
+          {pages[index].map((logo, position) => (
+            <div className="client-logo" key={`${index}-${logo.name}-${position}`}>
+              <Image src={assetPath(`/assets/Trusted Industry - Logo/${logo.file}`)} alt={logo.name} fill sizes="(max-width: 680px) 44vw, (max-width: 1024px) 29vw, 180px" />
+            </div>
+          ))}
+        </div>
       </div>
       <div className="client-pagination">
         <div className="carousel-dots" role="group" aria-label="Choose trusted industry logo group">
@@ -48,6 +48,7 @@ export function TrustedLogos() {
           <button type="button" aria-label="Previous trusted logos" onClick={previous}><ArrowLeft size={16} /></button>
           <button type="button" aria-label="Next trusted logos" onClick={next}><ArrowRight size={16} /></button>
         </div>
+        <CarouselPause paused={paused} reducedMotion={reducedMotion} onClick={togglePaused} label="trusted logos" />
       </div>
     </div>
   );
