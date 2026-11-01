@@ -25,6 +25,8 @@ The process preview plays the water treatment overview inline on click with nati
 
 The floating WhatsApp button and contact shortcut use the same inline phone-in-bubble logo, with no external icon request.
 
+The shared footer includes a development credit linking the Vitabletech team to `https://vitabletech.in/`. The link opens in a new tab with an accessible notice and `noopener noreferrer`.
+
 The default production URL is `http://www.flowveraarabia.com/`. Canonical links, Open Graph/Twitter sharing images, organization URL/logo and the sitemap use this domain, including in local previews. The public URL contains no credentials or secrets and is stored in `lib/site-url.ts`.
 
 Override it with the build-time `SITE_URL` environment variable, or the `SITE_URL` repository variable for GitHub Actions. The deployment workflow passes that variable into the build; an unset/empty value uses the production default. URL paths determine the asset base path and are included exactly once. Invalid URLs fail the build explicitly. Project-page robots files are served under the project path; search engines look for robots rules at the domain root.

@@ -44,6 +44,7 @@ export function SiteFooter() {
           <Link href="/site-map/">Sitemap</Link>
           <Link href="/#home">Back to top <ArrowUpRight size={14} aria-hidden="true" /></Link>
         </div>
+        <p className="footer-credit">This site is developed by the <a href="https://vitabletech.in/" target="_blank" rel="noopener noreferrer">Vitabletech team<span className="sr-only"> (opens in a new tab)</span></a>.</p>
       </div>
     </footer>
   );
