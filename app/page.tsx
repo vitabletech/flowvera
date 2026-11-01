@@ -6,7 +6,7 @@ import { SiteHeader } from "@/components/site-header";
 import { Reveal } from "@/components/reveal";
 import { ServicesCarousel } from "@/components/services-carousel";
 import { GalleryCarousel } from "@/components/gallery-carousel";
-import { ProcessPlayer } from "@/components/process-player";
+import { ProcessVisual } from "@/components/process-visual";
 import { OfficeMap } from "@/components/office-map";
 import { TrustedLogos } from "@/components/trusted-logos";
 import { assetPath } from "@/lib/asset-path";
@@ -17,23 +17,25 @@ import { serviceHref } from "@/lib/services";
 function Hero() {
   return (
     <section className="hero" id="home">
-      <Image
-        className="hero-image"
-        src={assetPath("/assets/optimized/hero.webp")}
-        alt="Industrial water treatment plant with FlowVera filtration equipment"
-        fill
-        priority
-        sizes="100vw"
-      />
+      <video
+        className="hero-video"
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="metadata"
+        poster={assetPath("/assets/optimized/hero.webp")}
+        aria-hidden="true"
+        tabIndex={-1}
+      >
+        <source src={assetPath("/assets/gemini_generated_video_e799f989_gwr_video_mvp.mp4")} type="video/mp4" />
+        Your browser does not support embedded video.
+      </video>
       <div className="hero-shade" />
       <SiteHeader />
       <div className="hero-content">
         <h1>Pure water for industries and life</h1>
         <p>RO membranes, speciality chemicals and water treatment systems</p>
-        <div className="hero-actions">
-          <Link className="button button-primary" href="/enquiry/">Request a quotation <ArrowUpRight size={17} aria-hidden="true" /></Link>
-          <Link className="button button-outline" href="/products/">Explore our solutions <ArrowRight size={17} aria-hidden="true" /></Link>
-        </div>
       </div>
     </section>
   );
@@ -64,7 +66,7 @@ function ProcessSection() {
   return (
     <section className="process-section" id="journey">
       <Reveal><h2 className="section-title">Smarter Journey to Pure Water.</h2></Reveal>
-      <Reveal className="process-frame" direction="zoom"><ProcessPlayer /></Reveal>
+      <Reveal className="process-frame" direction="zoom"><ProcessVisual /></Reveal>
     </section>
   );
 }
@@ -162,10 +164,6 @@ function ContactSection() {
           <a href="mailto:info@flowveraarabia.com">info@flowveraarabia.com</a>
           <a href="tel:+966508607349">+966 50 860 7349</a>
           <p>For a quotation, share your water source, required capacity and project location.</p>
-        </div>
-        <div className="request-actions">
-          <Link className="button button-primary" href="/enquiry/">Request a quotation</Link>
-          <Link className="button button-secondary" href="/book-demo/">Book a demo</Link>
         </div>
       </Reveal>
       <Reveal direction="right"><OfficeMap /></Reveal>
