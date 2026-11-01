@@ -2,9 +2,8 @@
 
 import Image from "next/image";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { useEffect, useState } from "react";
 import { assetPath } from "@/lib/asset-path";
-import { useCarousel } from "@/components/use-carousel";
+import { useLoopingCarousel } from "@/components/use-looping-carousel";
 import { CarouselPause } from "@/components/carousel-pause";
 
 const gallery = [
@@ -14,30 +13,18 @@ const gallery = [
 ];
 
 export function GalleryCarousel() {
-  const [slideDistance, setSlideDistance] = useState(510);
-  const maxIndex = gallery.length - 1;
-  const { index, setIndex, next, previous, dragOffset, dragging, regionProps, swipeProps, stopped, paused, reducedMotion, togglePaused } = useCarousel(maxIndex);
-
-  useEffect(() => {
-    const updateLayout = () => {
-      const mobile = window.innerWidth <= 680;
-      setSlideDistance((mobile ? window.innerWidth * 0.82 : 486) + 24);
-      setIndex((current) => Math.min(current, gallery.length - 1));
-    };
-    updateLayout();
-    window.addEventListener("resize", updateLayout);
-    return () => window.removeEventListener("resize", updateLayout);
-  }, [setIndex]);
+  const { index, setIndex, next, previous, dragging, regionProps, swipeProps, stopped, paused, reducedMotion, togglePaused, trackRef, windowRef, slides, isVisible, trackStyle, onTransitionEnd } = useLoopingCarousel(gallery, 510);
   return (
     <div {...regionProps} className="gallery-carousel" role="region" aria-roledescription="carousel" aria-label="FlowVera project gallery">
-      <div {...swipeProps} className={"gallery-window carousel-swipe" + (dragging ? " is-dragging" : "")} aria-live={stopped ? "polite" : "off"}>
-        <div className="gallery-track" style={{ transform: `translateX(${-index * slideDistance + dragOffset}px)`, transition: dragging ? "none" : undefined }}>
-          {gallery.map((item) => (
-            <figure className="gallery-card" key={item.src}>
+      <div {...swipeProps} ref={windowRef} className={"gallery-window carousel-swipe" + (dragging ? " is-dragging" : "")}>
+        <div className="gallery-track" ref={trackRef} style={trackStyle} onTransitionEnd={onTransitionEnd}>
+          {slides.map(({ item, position, logicalIndex }) => (
+            <figure className="gallery-card" key={position} aria-hidden={!isVisible(position)} role="group" aria-roledescription="slide" aria-label={`${logicalIndex + 1} of ${gallery.length}`}>
               <Image src={item.src} alt={item.alt} fill sizes="(max-width: 700px) 82vw, 486px" />
             </figure>
           ))}
         </div>
+        <p className="sr-only" aria-live={stopped ? "polite" : "off"} aria-atomic="true">Project image {index + 1} of {gallery.length}</p>
       </div>
       <div className="carousel-controls gallery-controls">
         <div className="carousel-dots" role="group" aria-label="Choose a project image">

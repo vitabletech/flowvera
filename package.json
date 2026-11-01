@@ -6,7 +6,8 @@
     "dev": "next dev --webpack",
     "build": "next build --webpack",
     "preview": "python3 -m http.server 4173 --directory out",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "test": "node --test tests/*.test.mjs"
   },
   "dependencies": {
     "framer-motion": "^14.9.0",

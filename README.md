@@ -19,7 +19,7 @@ The source images remain in `assets/`. The site uses high-quality WebP delivery 
 
 ## UI, accessibility and SEO
 
-The existing visual design is retained with clearer hero actions, visible contact details, keyboard focus indicators, a skip link, larger carousel controls and tablet/mobile navigation. The header has an outlined quotation action and a keyboard-accessible product dropdown. All three carousels auto-rotate every 4.2 seconds while visible, pause on mouse hover, keyboard focus or dragging, and support mouse dragging and touch swiping alongside arrows/dots. A pause/resume button provides persistent control. Autoplay stops for reduced-motion preferences, hidden browser tabs and offscreen sliders. Vertical touch scrolling is preserved; dragging a service card does not open its product link. Service cards retain the next-card preview and bring it into view when focused. Section content is visible before JavaScript loads.
+The existing visual design is retained with clearer hero actions, visible contact details, keyboard focus indicators, a skip link, larger carousel controls and tablet/mobile navigation. The header has an outlined quotation action and a keyboard-accessible product dropdown. All three carousels auto-rotate every 4.2 seconds while visible, pause on mouse hover, keyboard focus or dragging, and support mouse dragging and touch swiping alongside arrows/dots. The service and project-image rows loop seamlessly in both directions: the three gallery images repeat 1-2-3-1-2-3 without empty space or a rewind animation. Dots represent original slides, not repeated copies. Card widths and gaps are measured on resize, preserving the next-card preview across screen sizes. Offscreen copies are excluded from keyboard navigation and assistive technology. A pause/resume button provides persistent control. Autoplay stops for reduced-motion preferences, hidden browser tabs and offscreen sliders. Vertical touch scrolling is preserved; dragging a service card does not open its product link. Service cards bring the next-card preview into view when focused. Section content is visible before JavaScript loads.
 
 The process preview plays the water treatment overview inline on click with native video controls, without an extra video selector or file link below it. It does not autoplay on page load or preload MP4 files. Playback/load errors are shown explicitly; a direct video-file link appears only if playback fails.
 
@@ -31,7 +31,7 @@ Override it with the build-time `SITE_URL` environment variable, or the `SITE_UR
 
 Once DNS and a valid TLS certificate are active, set `SITE_URL=https://www.flowveraarabia.com/`, enable HTTP-to-HTTPS redirection at the host and rebuild. HTTPS could not be verified when the domain was configured, so the supplied HTTP URL is retained rather than assuming TLS support. Domain/DNS provisioning is not performed by the build.
 
-Validation uses `npm run lint`, `npx tsc --noEmit`, `npm run build` and browser checks of mobile/desktop layout, keyboard navigation, reduced motion and generated metadata. No unit-test tooling is included.
+Validation uses `npm test` for pure carousel-loop regression tests, `npm run lint`, `npx tsc --noEmit`, `npm run build` and browser checks of mobile/desktop layout, keyboard navigation, reduced motion and generated metadata. Unit tests use Node's built-in test runner and the existing TypeScript compiler without additional dependencies.
 
 ## Products, requests and legal pages
 
