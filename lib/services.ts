@@ -57,8 +57,9 @@ export const publicPages = [
   { title: "Home", href: "/" },
   { title: "Products & Services", href: "/products/" },
   ...services.map((service) => ({ title: service.title, href: serviceHref(service.slug) })),
+  { title: "Spare Parts", href: "/spare-parts/" },
+  { title: "Tanks", href: "/tanks/" },
   { title: "Request a Quotation", href: "/enquiry/" },
-  { title: "Book a Demo", href: "/book-demo/" },
   { title: "Terms and Conditions", href: "/terms/" },
   { title: "Privacy Policy", href: "/privacy/" },
   { title: "Sitemap", href: "/site-map/" }

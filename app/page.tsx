@@ -47,7 +47,7 @@ function AboutSection() {
         <h2>Engineering Better Water Solutions.</h2>
         <p>Water treatment demands precision engineering, robust equipment, and dedicated technical care. At FlowVera, we unite industrial-grade filtration, treatment systems, and field expertise to keep critical infrastructure operating smoothly.</p>
         <p>Whether addressing high-salinity brackish intake, delicate beverage standards, or strict pharmaceutical feed loops, we provide unified single-source reliability across hardware, chemicals, and service.</p>
-        <Link className="button button-primary" href="#contact">Talk to our team <ArrowUpRight size={15} aria-hidden="true" /></Link>
+        <Link className="button button-primary" href="#contact">About Us<ArrowUpRight size={15} aria-hidden="true" /></Link>
       </Reveal>
       <Reveal className="about-image" direction="right">
         <Image
@@ -159,11 +159,6 @@ function ContactSection() {
             <span>WhatsApp <ArrowUpRight size={15} /></span>
           </a>
         </div>
-        <div className="contact-details">
-          <a href="mailto:info@flowveraarabia.com">info@flowveraarabia.com</a>
-          <a href="tel:+966508607349">+966 50 860 7349</a>
-          <p>For a quotation, share your water source, required capacity and project location.</p>
-        </div>
       </Reveal>
       <Reveal direction="right"><OfficeMap /></Reveal>
     </section>
@@ -185,19 +180,19 @@ function CallToAction() {
 export default function HomePage() {
   return (
     <>
-    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationData).replace(/</g, "\\u003c") }} />
-    <SiteHeader />
-    <main id="main-content" tabIndex={-1}>
-      <Hero />
-      <AboutSection />
-      <ProcessSection />
-      <ServiceSection />
-      <GallerySection />
-      <ChemicalsSection />
-      <ClientsSection />
-      <CallToAction />
-      <ContactSection />
-    </main>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationData).replace(/</g, "\\u003c") }} />
+      <SiteHeader />
+      <main id="main-content" tabIndex={-1}>
+        <Hero />
+        <AboutSection />
+        <ProcessSection />
+        <ServiceSection />
+        <GallerySection />
+        <ChemicalsSection />
+        <ClientsSection />
+        <CallToAction />
+        <ContactSection />
+      </main>
       <SiteFooter />
       <a className="floating-whatsapp" href="https://wa.me/966508607349" target="_blank" rel="noreferrer" aria-label="Chat with FlowVera on WhatsApp">
         <WhatsAppIcon size={26} />

@@ -4,8 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { useCarousel } from "@/components/use-carousel";
 import { repeatSlides } from "@/lib/carousel-loop";
 
-export function useLoopingCarousel<T>(items: readonly T[], initialDistance: number) {
-  const carousel = useCarousel(items.length - 1, true);
+export function useLoopingCarousel<T>(items: readonly T[], initialDistance: number, interval = 3500) {
+  const carousel = useCarousel(items.length - 1, true, interval);
   const trackRef = useRef<HTMLDivElement>(null);
   const windowRef = useRef<HTMLDivElement>(null);
   const [layout, setLayout] = useState({ distance: initialDistance, visible: 3, full: 2 });

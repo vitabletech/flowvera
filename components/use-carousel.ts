@@ -4,7 +4,7 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState, type DragEve
 import { useReducedMotion } from "framer-motion";
 import { loopIndex, loopTarget } from "@/lib/carousel-loop";
 
-export function useCarousel(maxIndex: number, looping = false) {
+export function useCarousel(maxIndex: number, looping = false, interval = 3500) {
   const count = maxIndex + 1;
   const [position, setPosition] = useState(looping ? count : 0);
   const [snapping, setSnapping] = useState(false);
@@ -21,7 +21,7 @@ export function useCarousel(maxIndex: number, looping = false) {
   const gesture = useRef<{ id: number; x: number; y: number; horizontal: boolean } | null>(null);
   const suppressClick = useRef(false);
   const reducedMotion = useReducedMotion();
-  const stopped = paused || hovered || focused || dragging || !inView || !pageVisible || !!reducedMotion;
+  const stopped = paused || hovered || focused || dragging || !inView || !pageVisible;
   const currentIndex = looping ? loopIndex(position, count) : Math.min(position, maxIndex);
 
   const move = useCallback((target: (current: number) => number) => {
@@ -87,7 +87,7 @@ export function useCarousel(maxIndex: number, looping = false) {
   useEffect(() => {
     const region = regionRef.current;
     if (!region) return;
-    const observer = new IntersectionObserver(([entry]) => setInView(entry.isIntersecting), { threshold: 0.15 });
+    const observer = new IntersectionObserver(([entry]) => setInView(entry.isIntersecting), { threshold: 0.05 });
     observer.observe(region);
     const updateVisibility = () => setPageVisible(document.visibilityState === "visible");
     updateVisibility();
@@ -100,9 +100,9 @@ export function useCarousel(maxIndex: number, looping = false) {
 
   useEffect(() => {
     if (stopped || maxIndex === 0) return;
-    const timer = window.setTimeout(next, 4200);
+    const timer = window.setTimeout(next, interval);
     return () => window.clearTimeout(timer);
-  }, [position, maxIndex, next, stopped]);
+  }, [position, maxIndex, next, stopped, interval]);
 
   function resetGesture(event: PointerEvent<HTMLDivElement>) {
     gesture.current = null;

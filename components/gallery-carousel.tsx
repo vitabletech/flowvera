@@ -1,25 +1,89 @@
 "use client";
 
 import Image from "next/image";
-import { ArrowLeft, ArrowRight } from "lucide-react";
 import { assetPath } from "@/lib/asset-path";
 import { useLoopingCarousel } from "@/components/use-looping-carousel";
 
 const gallery = [
-  { src: assetPath("/assets/optimized/project-water-softener.webp"), alt: "FlowVera water softener systems" },
-  { src: assetPath("/assets/optimized/project-ro-chemicals.webp"), alt: "FlowVera reverse osmosis membrane chemicals" },
-  { src: assetPath("/assets/optimized/project-cartridge-filters.webp"), alt: "FlowVera cartridge filter systems" }
+  {
+    src: assetPath("/assets/optimized/project-water-pumps.webp"),
+    alt: "FlowVera high-performance water pumps for water treatment and industrial applications"
+  },
+  {
+    src: assetPath("/assets/optimized/project-ro-plant.webp"),
+    alt: "FlowVera industrial and commercial reverse osmosis standard plant"
+  },
+  {
+    src: assetPath("/assets/optimized/project-multimedia-filter.webp"),
+    alt: "FlowVera multimedia filter (MMF) pre-filtration system"
+  },
+  {
+    src: assetPath("/assets/optimized/project-water-softener.webp"),
+    alt: "FlowVera water softener systems for scale prevention"
+  },
+  {
+    src: assetPath("/assets/optimized/project-dm-plant.webp"),
+    alt: "FlowVera demineralization (DM) plant solutions"
+  },
+  {
+    src: assetPath("/assets/optimized/project-activated-carbon-filter.webp"),
+    alt: "FlowVera activated carbon filter (ACF) system"
+  },
+  {
+    src: assetPath("/assets/optimized/project-sewage-treatment.webp"),
+    alt: "FlowVera sewage treatment and grey water system plant"
+  },
+  {
+    src: assetPath("/assets/optimized/project-specialty-chemicals.webp"),
+    alt: "FlowVera specialty water treatment chemicals"
+  },
+  {
+    src: assetPath("/assets/optimized/project-water-tanks.webp"),
+    alt: "FlowVera specialized water tanks including GLS, FRP, and polyethylene"
+  },
+  {
+    src: assetPath("/assets/optimized/project-spares-instruments.webp"),
+    alt: "FlowVera genuine spares and precision instruments"
+  }
 ];
 
 export function GalleryCarousel() {
-  const { index, setIndex, next, previous, dragging, regionProps, swipeProps, stopped, paused, reducedMotion, togglePaused, trackRef, windowRef, slides, isVisible, trackStyle, onTransitionEnd } = useLoopingCarousel(gallery, 510);
+  const {
+    index,
+    setIndex,
+    dragging,
+    regionProps,
+    swipeProps,
+    stopped,
+    trackRef,
+    windowRef,
+    slides,
+    isVisible,
+    trackStyle,
+    onTransitionEnd
+  } = useLoopingCarousel(gallery, 446, 3200);
+
   return (
     <div {...regionProps} className="gallery-carousel" role="region" aria-roledescription="carousel" aria-label="FlowVera project gallery">
       <div {...swipeProps} ref={windowRef} className={"gallery-window carousel-swipe" + (dragging ? " is-dragging" : "")}>
         <div className="gallery-track" ref={trackRef} style={trackStyle} onTransitionEnd={onTransitionEnd}>
           {slides.map(({ item, position, logicalIndex }) => (
-            <figure className="gallery-card" key={position} aria-hidden={!isVisible(position)} role="group" aria-roledescription="slide" aria-label={`${logicalIndex + 1} of ${gallery.length}`}>
-              <Image src={item.src} alt={item.alt} fill sizes="(max-width: 700px) 82vw, 486px" />
+            <figure
+              className="gallery-card"
+              key={position}
+              data-carousel-position={position}
+              aria-hidden={!isVisible(position)}
+              role="group"
+              aria-roledescription="slide"
+              aria-label={`${logicalIndex + 1} of ${gallery.length}`}
+            >
+              <Image
+                src={item.src}
+                alt={item.alt}
+                fill
+                priority={logicalIndex < 3}
+                sizes="(max-width: 680px) 82vw, 422px"
+              />
             </figure>
           ))}
         </div>

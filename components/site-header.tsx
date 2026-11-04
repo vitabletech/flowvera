@@ -7,11 +7,14 @@ import { useEffect, useRef, useState } from "react";
 import { assetPath } from "@/lib/asset-path";
 import { services, serviceHref } from "@/lib/services";
 
+const dropdownServices = services.filter(s => s.slug !== "specialty-chemicals");
+
 const links = [
   { label: "About Us", href: "/#about" },
   { label: "Products & Services", href: "/products/" },
   { label: "Specialty Chemicals", href: serviceHref("specialty-chemicals") },
-  { label: "Contact Us", href: "/#contact" }
+  { label: "Spare Parts", href: "/spare-parts/" },
+  { label: "Tanks", href: "/tanks/" }
 ];
 
 export function SiteHeader() {
@@ -54,63 +57,74 @@ export function SiteHeader() {
   }, [open, productsOpen]);
 
   return (
-    <header ref={headerRef} className="site-header" onBlur={event => {
-      if (!event.currentTarget.contains(event.relatedTarget)) closeMenus();
-    }}>
-      <Link className="brand" href="/#home" aria-label="FlowVera home" onClick={closeMenus}>
-        <Image
-          src={assetPath("/assets/optimized/flowvera-logo.webp")}
-          alt="FlowVera"
-          fill
-          priority
-          sizes="190px"
-        />
-      </Link>
-      <nav className="desktop-nav" aria-label="Main navigation">
-        {links.map((link) => link.href === "/products/" ? (
-          <div className="products-disclosure" key={link.href}>
-            <button ref={productsRef} className="nav-link products-toggle" type="button" aria-expanded={productsOpen} aria-controls="products-menu" onClick={() => setProductsOpen(value => !value)}>
-              {link.label}<ChevronDown size={14} aria-hidden="true" />
-            </button>
-            <div id="products-menu" className="products-menu" hidden={!productsOpen}>
-              <Link href="/products/" onClick={closeMenus}>View all products &amp; services</Link>
-              {services.map(s => <Link key={s.slug} href={serviceHref(s.slug)} onClick={closeMenus}>{s.title}</Link>)}
-            </div>
-          </div>
-        ) : (
-          <Link key={link.label} href={link.href} className="nav-link" onClick={closeMenus}>
-            {link.label}
-          </Link>
-        ))}
-      </nav>
-      <Link className="button quote-button" href="/enquiry/" onClick={closeMenus}>
-        Get a quotation
-      </Link>
-      <button
-        className="menu-toggle"
-        ref={toggleRef}
-        type="button"
-        aria-label={open ? "Close navigation menu" : "Open navigation menu"}
-        aria-expanded={open}
-        aria-controls="mobile-nav"
-        onClick={() => setOpen((value) => !value)}
-      >
-        {open ? <X size={23} /> : <Menu size={23} />}
-      </button>
-      <nav id="mobile-nav" hidden={!open} className={"mobile-nav" + (open ? " is-open" : "")} aria-label="Mobile navigation">
-        {links.map((link) => (
-          <Link key={link.label} href={link.href} onClick={() => setOpen(false)}>
-            {link.label}
-          </Link>
-        ))}
-        <div className="mobile-products" aria-label="Product categories">
-          {services.map(s => <Link key={s.slug} href={serviceHref(s.slug)} onClick={closeMenus}>{s.title}</Link>)}
-        </div>
-        <Link href="/book-demo/" onClick={closeMenus}>Book a demo</Link>
-        <Link className="mobile-quote" href="/enquiry/" onClick={closeMenus}>
-          Get a quotation
+    <>
+      {open && <div className="mobile-backdrop" onClick={closeMenus} aria-hidden="true" />}
+      <header ref={headerRef} className="site-header" onBlur={event => {
+        if (!event.currentTarget.contains(event.relatedTarget)) closeMenus();
+      }}>
+        <Link className="brand" href="/#home" aria-label="FlowVera home" onClick={closeMenus}>
+          <Image
+            src={assetPath("/assets/optimized/flowvera-logo.webp")}
+            alt="FlowVera"
+            fill
+            priority
+            sizes="190px"
+          />
         </Link>
-      </nav>
-    </header>
+        <nav className="desktop-nav" aria-label="Main navigation">
+          {links.map((link) => link.href === "/products/" ? (
+            <div className="products-disclosure" key={link.href}>
+              <button ref={productsRef} className="nav-link products-toggle" type="button" aria-expanded={productsOpen} aria-controls="products-menu" onClick={() => setProductsOpen(value => !value)}>
+                {link.label}<ChevronDown size={14} aria-hidden="true" />
+              </button>
+              <div id="products-menu" className="products-menu" hidden={!productsOpen}>
+                <Link href="/products/" onClick={closeMenus}>View all products &amp; services</Link>
+                {dropdownServices.map(s => <Link key={s.slug} href={serviceHref(s.slug)} onClick={closeMenus}>{s.title}</Link>)}
+              </div>
+            </div>
+          ) : (
+            <Link key={link.label} href={link.href} className="nav-link" onClick={closeMenus}>
+              {link.label}
+            </Link>
+          ))}
+        </nav>
+        <Link className="button quote-button" href="/enquiry/" onClick={closeMenus}>
+          Contact Us
+        </Link>
+        <button
+          className="menu-toggle"
+          ref={toggleRef}
+          type="button"
+          aria-label={open ? "Close navigation menu" : "Open navigation menu"}
+          aria-expanded={open}
+          aria-controls="mobile-nav"
+          onClick={() => setOpen((value) => !value)}
+        >
+          {open ? <X size={23} /> : <Menu size={23} />}
+        </button>
+        <nav id="mobile-nav" hidden={!open} className={"mobile-nav" + (open ? " is-open" : "")} aria-label="Mobile navigation">
+          {links.map((link) => (
+            <div key={link.label} className="mobile-nav-item">
+              <Link href={link.href} onClick={closeMenus}>
+                {link.label}
+              </Link>
+              {link.href === "/products/" && (
+                <div className="mobile-products" aria-label="Product categories">
+                  <Link href="/products/" onClick={closeMenus}>View all products &amp; services</Link>
+                  {dropdownServices.map((s) => (
+                    <Link key={s.slug} href={serviceHref(s.slug)} onClick={closeMenus}>
+                      {s.title}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
+          <Link className="mobile-quote" href="/enquiry/" onClick={closeMenus}>
+            Contact Us
+          </Link>
+        </nav>
+      </header>
+    </>
   );
 }

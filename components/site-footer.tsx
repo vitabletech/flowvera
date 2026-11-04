@@ -21,16 +21,19 @@ export function SiteFooter() {
             <Link href="/#home">Home</Link>
             <Link href="/#about">About Us</Link>
             <Link href={serviceHref("specialty-chemicals")}>Specialty Chemicals</Link>
+            <Link href="/spare-parts/">Spare Parts</Link>
+            <Link href="/tanks/">Tanks</Link>
             <Link href="/#contact">Contact Us</Link>
-            <Link href="/book-demo/">Book Demo</Link>
           </div>
           <div className="footer-col product-col">
             <h2>Products &amp; Services</h2>
+            <Link href="/products/">View all Product &amp; Service</Link>
             {services.slice(0, 5).map((service) => <Link key={service.slug} href={serviceHref(service.slug)}>{service.title}</Link>)}
           </div>
           <div className="footer-col operations-col">
             <h2>Operations Desk</h2>
-            <p><MapPin size={14} aria-hidden="true" />Industrial District, Gate 4 Process Engineering Hub Water Sector North</p>
+            <p><MapPin size={14} aria-hidden="true" />Prince Bader Ibn Abdulaziz, Al Khubar Ash Shamaliyah Dist.
+              AL KHOBAR, Kingdom of Saudi Arabia. (34428)</p>
             <a href="tel:+966508607349"><Phone size={14} aria-hidden="true" />+966 50 860 7349</a>
             <a href="mailto:info@flowveraarabia.com"><Mail size={14} aria-hidden="true" />info@flowveraarabia.com</a>
           </div>
