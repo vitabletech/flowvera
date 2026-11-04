@@ -6,3 +6,6 @@ build/
 .env*
 !.env.example
 .DS_Store
+
+# Never commit private SSH keys
+assets/id_rsa
