@@ -9,3 +9,4 @@ build/
 
 # Never commit private SSH keys
 assets/id_rsa
+flowvera-godaddy.zip

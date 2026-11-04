@@ -8,7 +8,8 @@
     "preview": "python3 -m http.server 4173 --directory out",
     "lint": "eslint .",
     "test": "node --test tests/*.test.mjs",
-    "start": "node server.js"
+    "start": "node server.js",
+    "package:godaddy": "git archive --format=zip --output=flowvera-godaddy.zip HEAD"
   },
   "dependencies": {
     "@tailwindcss/postcss": "^4.3.3",
