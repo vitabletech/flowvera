@@ -2,7 +2,7 @@ name: Deploy static site to GitHub Pages and GoDaddy
 
 on:
   push:
-    branches: [main]
+    branches: [release]
   workflow_dispatch:
 
 permissions:
