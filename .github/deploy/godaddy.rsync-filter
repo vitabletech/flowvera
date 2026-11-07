@@ -1,0 +1,22 @@
+# Only these site-owned paths may be deleted on the receiver.
+R /_next/***
+R /assets/***
+R /404/***
+R /_not-found/***
+R /enquiry/***
+R /products/***
+R /privacy/***
+R /site-map/***
+R /spare-parts/***
+R /tanks/***
+R /terms/***
+R /book-demo/***
+R /404.html
+R /index.html
+R /index.txt
+R /layout-styles.css
+R /robots.txt
+R /sitemap.xml
+R /__next.*.txt
+# Preserve all other hosting content, including subdomains and .htaccess.
+P /***

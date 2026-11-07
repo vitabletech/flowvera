@@ -1,4 +1,4 @@
-name: Deploy Next.js to GitHub Pages
+name: Deploy static site to GitHub Pages and GoDaddy
 
 on:
   push:
@@ -11,7 +11,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: github-pages
+  group: production-site-deploy
   # Let an in-progress publish finish before starting the next one.
   cancel-in-progress: false
 
@@ -49,3 +49,90 @@ jobs:
       - name: Deploy site
         id: deployment
         uses: actions/deploy-pages@v4
+
+  deploy-godaddy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    environment:
+      name: godaddy
+    env:
+      SITE_URL: ${{ vars.SITE_URL || 'http://www.flowveraarabia.com/' }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Verify GoDaddy URL uses the domain root
+        run: |
+          node --input-type=module <<'NODE'
+          const url = new URL(process.env.SITE_URL);
+          if (!['http:', 'https:'].includes(url.protocol) ||
+              url.pathname !== '/' || url.username || url.password || url.search || url.hash) {
+            throw new Error('GoDaddy SITE_URL must be an HTTP(S) domain-root URL without credentials, query parameters, or fragments.');
+          }
+          NODE
+      - name: Test hosting cleanup safeguards
+        run: node --test tests/godaddy-deploy.test.mjs
+      - name: Build GoDaddy static site
+        run: |
+          npm run build
+          test -s out/index.html
+          test -d out/_next
+      - name: Configure SSH authentication
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.GODADDY_SSH_PRIVATE_KEY }}
+          SSH_KNOWN_HOSTS: ${{ secrets.GODADDY_SSH_KNOWN_HOSTS }}
+        run: |
+          set -euo pipefail
+          if [[ -z "$SSH_PRIVATE_KEY" || -z "$SSH_KNOWN_HOSTS" ]]; then
+            echo "::error::Set GODADDY_SSH_PRIVATE_KEY and GODADDY_SSH_KNOWN_HOSTS before deploying."
+            exit 1
+          fi
+          umask 077
+          mkdir -p "$RUNNER_TEMP/godaddy-ssh"
+          printf '%s\n' "$SSH_PRIVATE_KEY" > "$RUNNER_TEMP/godaddy-ssh/key"
+          printf '%s\n' "$SSH_KNOWN_HOSTS" > "$RUNNER_TEMP/godaddy-ssh/known_hosts"
+          cat > "$RUNNER_TEMP/godaddy-ssh/config" <<EOF
+          Host godaddy
+            HostName 132.148.180.150
+            User bykocjpmriup
+            Port 22
+            IdentityFile $RUNNER_TEMP/godaddy-ssh/key
+            UserKnownHostsFile $RUNNER_TEMP/godaddy-ssh/known_hosts
+            IdentitiesOnly yes
+            BatchMode yes
+            StrictHostKeyChecking yes
+            ConnectTimeout 30
+            ServerAliveInterval 15
+            ServerAliveCountMax 3
+          EOF
+      - name: Verify hosting destination
+        run: |
+          set -euo pipefail
+          command -v rsync
+          ssh -F "$RUNNER_TEMP/godaddy-ssh/config" godaddy \
+            'set -eu; command -v rsync; test -d /home/bykocjpmriup/public_html; test -w /home/bykocjpmriup/public_html'
+      - name: Upload build and remove stale site files
+        run: |
+          set -euo pipefail
+          rsync -rlpz --checksum --delay-updates --delete-delay --itemize-changes \
+            --chmod=Du=rwx,Dgo=rx,Fu=rw,Fgo=r \
+            --filter="merge .github/deploy/godaddy.rsync-filter" \
+            -e "ssh -F $RUNNER_TEMP/godaddy-ssh/config" \
+            out/ godaddy:/home/bykocjpmriup/public_html/
+      - name: Remove temporary SSH credentials
+        if: always()
+        run: |
+          rm -f "$RUNNER_TEMP/godaddy-ssh/key" \
+            "$RUNNER_TEMP/godaddy-ssh/known_hosts" \
+            "$RUNNER_TEMP/godaddy-ssh/config"
+          if [[ -d "$RUNNER_TEMP/godaddy-ssh" ]]; then
+            rmdir "$RUNNER_TEMP/godaddy-ssh"
+          fi

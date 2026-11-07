@@ -7,11 +7,47 @@ Responsive Next.js App Router site for FlowVera, built from the supplied design 
 - Requires Node.js 20.9 or newer and npm.
 - Run `npm install`, then `npm run dev`.
 
-## Static build and GitHub Pages
+## Static build and deployment
 
-`npm run build` exports every route to the `out/` directory. The project includes a GitHub Actions workflow at `.github/workflows/deploy.yml` that builds and deploys `out/` to GitHub Pages on pushes to `main` and on manual runs.
+`npm run build` exports every route to the `out/` directory. The GitHub Actions workflow at `.github/workflows/deploy.yml` deploys to both GitHub Pages and GoDaddy on pushes to `main` and on manual runs. The destinations build independently: GitHub Pages uses `https://vitabletech.github.io/flowvera/`, while GoDaddy uses the domain root so asset and navigation paths work in `public_html`.
 
-In the repository’s GitHub settings, set **Pages → Build and deployment → Source** to **GitHub Actions**. For the production custom domain, configure **Pages → Custom domain** as `www.flowveraarabia.com` and the corresponding DNS records with your domain provider. Custom-domain builds use the root path. To deploy to a GitHub project URL instead, set `SITE_URL` to its complete URL including the repository path.
+### GitHub Pages
+
+In the repository's GitHub settings, set **Pages → Build and deployment → Source** to **GitHub Actions**. Keep this deployment at the GitHub project URL. The production domain's DNS should point to GoDaddy, not GitHub Pages.
+
+### GoDaddy SSH deployment
+
+The workflow uploads **the contents of `out/`**, not the source repository, `.next/`, or `node_modules/`, to:
+
+- Host: `132.148.180.150`, SSH port `22`
+- User: `bykocjpmriup`
+- Destination: `/home/bykocjpmriup/public_html/`
+
+Create the `godaddy` GitHub environment under **Settings → Environments** (optionally require deployment approval). Add these secrets there, or under **Settings → Secrets and variables → Actions**:
+
+| Secret | Value |
+| --- | --- |
+| `GODADDY_SSH_PRIVATE_KEY` | The complete private key corresponding to the public key authorized for this hosting account, for example your local `~/.ssh/hosting_key`. Use a dedicated deployment key without a passphrase; keep its contents out of the repository and logs. |
+| `GODADDY_SSH_KNOWN_HOSTS` | The verified OpenSSH known-hosts entry for `132.148.180.150`. |
+
+To prepare the host entry locally:
+
+```sh
+ssh-keyscan -p 22 -H 132.148.180.150 > godaddy-known-hosts
+ssh-keygen -lf godaddy-known-hosts
+```
+
+**Before saving it as a secret, verify every fingerprint against the hosting provider or a trusted existing SSH connection.** A key scan alone does not authenticate the host. For example, use your existing trusted connection to run `ssh-keygen -lf /etc/ssh/ssh_host_ed25519_key.pub` for the corresponding host key if the provider allows access. Save the verified contents as `GODADDY_SSH_KNOWN_HOSTS`, then remove the local temporary file. The workflow requires strict host-key checking and fails on missing secrets, authentication failures, or host-key mismatches.
+
+Both the GitHub runner and GoDaddy account must have `rsync` available; the workflow checks this before uploading. Confirm through your existing SSH connection with `command -v rsync`. If unavailable, ask GoDaddy to enable it before running the workflow.
+
+Optionally set the `SITE_URL` repository or `godaddy` environment variable to the production URL. Its default is `http://www.flowveraarabia.com/`; GoDaddy rejects URLs containing a path such as `/flowvera/`. Use HTTPS only after the hosting certificate is active.
+
+The upload overwrites matching build files and deletes stale files **only** in the site-owned paths listed in `.github/deploy/godaddy.rsync-filter`. This includes `_next/`, `assets/`, the site's route folders, generated root HTML/text/SEO files, and the legacy `book-demo/` route. These directories are exclusively owned by the build: do not store manual uploads there. When removing or renaming routes, retain their old directory entries in the filter so stale routes can be cleaned up.
+
+Everything else is protected from deletion, including `test.flowveraarabia.com/`, `cgi-bin/`, `.htaccess`, `.well-known/`, `404.shtml`, and unrelated hosting files. New build files are still uploaded; add new site-owned root directories/files to the filter if they should support stale-file cleanup. Back up the current site before the first deployment. Deployment runs are serialized and replacement files/deletions are delayed until the transfer finishes, but this is not an atomic whole-site release or a backup.
+
+After configuring secrets, run **Actions → Deploy static site to GitHub Pages and GoDaddy → Run workflow** on `main`. Both deployment jobs report their own results; a Pages failure does not block GoDaddy or vice versa.
 
 To preview the static export locally, run `npm run preview` after the build, then open http://localhost:4173.
 
@@ -31,11 +67,11 @@ The shared footer includes a development credit linking the Vitabletech team to 
 
 The default production URL is `http://www.flowveraarabia.com/`. Canonical links, Open Graph/Twitter sharing images, organization URL/logo and the sitemap use this domain, including in local previews. The public URL contains no credentials or secrets and is stored in `lib/site-url.ts`.
 
-Override it with the build-time `SITE_URL` environment variable, or the `SITE_URL` repository variable for GitHub Actions. The deployment workflow passes that variable into the build; an unset/empty value uses the production default. URL paths determine the asset base path and are included exactly once. Invalid URLs fail the build explicitly. Project-page robots files are served under the project path; search engines look for robots rules at the domain root.
+Override it with the build-time `SITE_URL` environment variable, or the `SITE_URL` repository/environment variable for GoDaddy GitHub Actions. The GoDaddy build passes that variable into the build; an unset/empty value uses the production default. The separate GitHub Pages build uses its fixed project URL. URL paths determine the asset base path and are included exactly once. Invalid URLs fail the build explicitly. Project-page robots files are served under the project path; search engines look for robots rules at the domain root.
 
 Once DNS and a valid TLS certificate are active, set `SITE_URL=https://www.flowveraarabia.com/`, enable HTTP-to-HTTPS redirection at the host and rebuild. HTTPS could not be verified when the domain was configured, so the supplied HTTP URL is retained rather than assuming TLS support. Domain/DNS provisioning is not performed by the build.
 
-Validation uses `npm test` for pure carousel-loop regression tests, `npm run lint`, `npx tsc --noEmit`, `npm run build` and browser checks of mobile/desktop layout, keyboard navigation, reduced motion and generated metadata. Unit tests use Node's built-in test runner and the existing TypeScript compiler without additional dependencies.
+Validation uses `npm test` for carousel-loop and GoDaddy sync regression tests (requires `rsync`), `npm run lint`, `npx tsc --noEmit`, `npm run build` and browser checks of mobile/desktop layout, keyboard navigation, reduced motion and generated metadata. Tests use Node's built-in test runner and the existing TypeScript compiler without additional npm dependencies. The deployment test checks replacement and deletion of stale build output while preserving subdomains and hosting files.
 
 ## Products, requests and legal pages
 
