@@ -17,6 +17,7 @@ R /index.txt
 R /layout-styles.css
 R /robots.txt
 R /sitemap.xml
+R /version.json
 R /__next.*.txt
 # Preserve all other hosting content, including subdomains and .htaccess.
 P /***

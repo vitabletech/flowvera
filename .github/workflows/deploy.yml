@@ -78,8 +78,8 @@ jobs:
             throw new Error('GoDaddy SITE_URL must be an HTTP(S) domain-root URL without credentials, query parameters, or fragments.');
           }
           NODE
-      - name: Test hosting cleanup safeguards
-        run: node --test tests/godaddy-deploy.test.mjs
+      - name: Test build metadata and hosting cleanup safeguards
+        run: node --test tests/build-version.test.mjs tests/godaddy-deploy.test.mjs
       - name: Build GoDaddy static site
         run: |
           npm run build
@@ -127,6 +127,11 @@ jobs:
             --filter="merge .github/deploy/godaddy.rsync-filter" \
             -e "ssh -F $RUNNER_TEMP/godaddy-ssh/config" \
             out/ godaddy:/home/bykocjpmriup/public_html/
+      - name: Verify deployed build version
+        run: |
+          set -euo pipefail
+          ssh -F "$RUNNER_TEMP/godaddy-ssh/config" godaddy \
+            'cat /home/bykocjpmriup/public_html/version.json' | cmp out/version.json -
       - name: Remove temporary SSH credentials
         if: always()
         run: |

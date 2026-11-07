@@ -1,10 +1,11 @@
 {
   "name": "flowvera",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "private": true,
   "scripts": {
     "dev": "next dev --webpack",
     "build": "next build --webpack",
+    "postbuild": "node scripts/write-build-version.mjs",
     "preview": "python3 -m http.server 4173 --directory out",
     "lint": "eslint .",
     "test": "node --test tests/*.test.mjs",

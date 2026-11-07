@@ -42,7 +42,9 @@ test("GoDaddy sync replaces build files and removes stale output without deletin
     for (const path of protectedPaths) write(destination, path, `preserve ${path}`);
     for (const path of stalePaths) write(destination, path, "stale build");
     write(destination, "index.html", "old homepage");
+    write(destination, "version.json", '{"version":"old"}');
     write(source, "index.html", "new homepage");
+    write(source, "version.json", '{"version":"1.0.0+build.42.1"}');
     write(source, "_next/static/new.js", "new script");
     write(source, "products/current/index.html", "current product");
     write(source, "new-route/index.html", "new route");
@@ -59,7 +61,7 @@ test("GoDaddy sync replaces build files and removes stale output without deletin
     for (const path of stalePaths) {
       assert.equal(existsSync(join(destination, path)), false, `${path} should be deleted`);
     }
-    for (const path of ["index.html", "_next/static/new.js", "products/current/index.html", "new-route/index.html"]) {
+    for (const path of ["index.html", "version.json", "_next/static/new.js", "products/current/index.html", "new-route/index.html"]) {
       assert.equal(readFileSync(join(destination, path), "utf8"), readFileSync(join(source, path), "utf8"));
     }
     assert.equal(statSync(join(destination, "index.html")).mode & 0o777, 0o644);

@@ -15,6 +15,28 @@ Responsive Next.js App Router site for FlowVera, built from the supplied design 
 
 In the repository's GitHub settings, set **Pages → Build and deployment → Source** to **GitHub Actions**. Keep this deployment at the GitHub project URL. The production domain's DNS should point to GoDaddy, not GitHub Pages.
 
+### Deployed build version
+
+Every successful `npm run build` runs a `postbuild` script that writes `out/version.json`. Both hosting destinations deploy it alongside the site; no version label is added to the UI. This is a public static file intended for developer inspection, not an authenticated endpoint, and contains no secrets.
+
+- GoDaddy: `http://www.flowveraarabia.com/version.json`
+- GitHub Pages: `https://vitabletech.github.io/flowvera/version.json`
+
+The JSON contains `version` (for example `1.0.0+build.42.1`), `releaseVersion`, `buildNumber`, `runAttempt`, full `commitSha`, UTC `builtAt`, and `workflowRunUrl`. The release version comes from `package.json`; GitHub's workflow run number and rerun attempt supply automatic build IDs. Both destinations have the same ID for the same run/attempt, although their build timestamps differ. Reruns increase the attempt number, not necessarily the run number. Missing or invalid CI metadata fails the build.
+
+For a new release, run `npm version patch --no-git-tag-version` (or `minor`/`major`) and commit the updated `package.json` and `package-lock.json`. Deployments do not increment or commit release versions automatically. Run numbers are scoped to this workflow, not a global release sequence.
+
+Local builds require Git and a checked-out commit. They use `1.0.0+local.<short-sha>` with null build/run fields; the commit identifies the checkout, not uncommitted edits. The timestamp distinguishes local builds. `version.json` is generated in ignored build output, not committed source. Use `npm run build`, not a direct `next build`, to include it.
+
+To avoid reading an older browser/proxy-cached copy, inspect with a cache-busting query:
+
+```sh
+curl --fail --show-error -H 'Cache-Control: no-cache' \
+  "http://www.flowveraarabia.com/version.json?t=$(date +%s)"
+```
+
+GoDaddy deployment verifies the uploaded version file against the local build over SSH. It describes the uploaded build, not an atomic release guarantee: a failed/partial deployment can still leave mixed site assets, so check the workflow result as well as the version file.
+
 ### GoDaddy SSH deployment
 
 The workflow uploads **the contents of `out/`**, not the source repository, `.next/`, or `node_modules/`, to:
@@ -71,7 +93,7 @@ Override it with the build-time `SITE_URL` environment variable, or the `SITE_UR
 
 Once DNS and a valid TLS certificate are active, set `SITE_URL=https://www.flowveraarabia.com/`, enable HTTP-to-HTTPS redirection at the host and rebuild. HTTPS could not be verified when the domain was configured, so the supplied HTTP URL is retained rather than assuming TLS support. Domain/DNS provisioning is not performed by the build.
 
-Validation uses `npm test` for carousel-loop and GoDaddy sync regression tests (requires `rsync`), `npm run lint`, `npx tsc --noEmit`, `npm run build` and browser checks of mobile/desktop layout, keyboard navigation, reduced motion and generated metadata. Tests use Node's built-in test runner and the existing TypeScript compiler without additional npm dependencies. The deployment test checks replacement and deletion of stale build output while preserving subdomains and hosting files.
+Validation uses `npm test` for build-version, carousel-loop and GoDaddy sync regression tests (requires `rsync`), `npm run lint`, `npx tsc --noEmit`, `npm run build` and browser checks of mobile/desktop layout, keyboard navigation, reduced motion and generated metadata. Tests use Node's built-in test runner and the existing TypeScript compiler without additional npm dependencies. Version tests check automatic build IDs, reruns, local builds, invalid CI metadata and the generated JSON file. The deployment test checks replacement and deletion of stale build output while preserving subdomains and hosting files.
 
 ## Products, requests and legal pages
 
