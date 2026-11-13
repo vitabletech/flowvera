@@ -10,7 +10,7 @@ import { services, serviceHref } from "@/lib/services";
 const dropdownServices = services.filter(s => s.slug !== "specialty-chemicals");
 
 const links = [
-  { label: "About Us", href: "/#about" },
+  { label: "About Us", href: "/about-us/" },
   { label: "Products & Services", href: "/products/" },
   { label: "Specialty Chemicals", href: serviceHref("specialty-chemicals") },
   { label: "Spare Parts", href: "/spare-parts/" },
@@ -27,6 +27,17 @@ export function SiteHeader() {
   const closeMenus = () => {
     setOpen(false);
     setProductsOpen(false);
+  };
+
+  const handleLinkClick = (href: string) => {
+    closeMenus();
+    if (typeof window !== "undefined" && (href.startsWith("/about-us") || href.startsWith("/about"))) {
+      if (window.location.hash) {
+        window.history.replaceState(null, "", href);
+      }
+      window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+      setTimeout(() => window.scrollTo({ top: 0, left: 0, behavior: "instant" }), 50);
+    }
   };
 
   useEffect(() => {
@@ -83,7 +94,7 @@ export function SiteHeader() {
               </div>
             </div>
           ) : (
-            <Link key={link.label} href={link.href} className="nav-link" onClick={closeMenus}>
+            <Link key={link.label} href={link.href} className="nav-link" scroll={true} onClick={() => handleLinkClick(link.href)}>
               {link.label}
             </Link>
           ))}
@@ -105,7 +116,7 @@ export function SiteHeader() {
         <nav id="mobile-nav" hidden={!open} className={"mobile-nav" + (open ? " is-open" : "")} aria-label="Mobile navigation">
           {links.map((link) => (
             <div key={link.label} className="mobile-nav-item">
-              <Link href={link.href} onClick={closeMenus}>
+              <Link href={link.href} scroll={true} onClick={() => handleLinkClick(link.href)}>
                 {link.label}
               </Link>
               {link.href === "/products/" && (

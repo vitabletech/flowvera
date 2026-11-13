@@ -55,6 +55,7 @@ export function serviceHref(slug: string): string {
 
 export const publicPages = [
   { title: "Home", href: "/" },
+  { title: "About Us", href: "/about-us/" },
   { title: "Products & Services", href: "/products/" },
   ...services.map((service) => ({ title: service.title, href: serviceHref(service.slug) })),
   { title: "Spare Parts", href: "/spare-parts/" },

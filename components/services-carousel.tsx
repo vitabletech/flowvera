@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { assetPath } from "@/lib/asset-path";
 import { services, serviceHref } from "@/lib/services";
 import { useLoopingCarousel } from "@/components/use-looping-carousel";
@@ -10,7 +10,7 @@ import { useLoopingCarousel } from "@/components/use-looping-carousel";
 const carouselServices = services.slice(0, 5);
 
 export function ServicesCarousel() {
-  const { index, setIndex, next, previous, dragging, regionProps, swipeProps, paused, reducedMotion, togglePaused, stopped, trackRef, windowRef, slides, isVisible, revealOnFocus, trackStyle, onTransitionEnd } = useLoopingCarousel(carouselServices, 408);
+  const { index, setIndex, dragging, regionProps, swipeProps, stopped, trackRef, windowRef, slides, isVisible, revealOnFocus, trackStyle, onTransitionEnd } = useLoopingCarousel(carouselServices, 408);
 
   return (
     <div {...regionProps} className="services-carousel" role="region" aria-roledescription="carousel" aria-label="Water treatment solutions">

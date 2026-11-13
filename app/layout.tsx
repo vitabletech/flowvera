@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Manrope } from "next/font/google";
 import "./globals.css";
+import { ScrollToTop } from "@/components/scroll-to-top";
 import { assetPath } from "@/lib/asset-path";
 import { siteUrl, siteTitle, siteDescription, socialImage } from "@/lib/seo";
 
@@ -51,6 +52,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en">
       <body suppressHydrationWarning className={manrope.variable + " " + inter.variable}>
+        <ScrollToTop />
         <a className="skip-link" href="#main-content">Skip to content</a>
         {children}
       </body>

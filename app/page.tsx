@@ -12,6 +12,7 @@ import { TrustedLogos } from "@/components/trusted-logos";
 import { assetPath } from "@/lib/asset-path";
 import { organizationData } from "@/lib/seo";
 import { SiteFooter } from "@/components/site-footer";
+import { AboutHashRedirect } from "@/components/about-hash-redirect";
 import { serviceHref } from "@/lib/services";
 
 function Hero() {
@@ -47,7 +48,13 @@ function AboutSection() {
         <h2>Engineering Better Water Solutions.</h2>
         <p>Water treatment demands precision engineering, robust equipment, and dedicated technical care. At FlowVera, we unite industrial-grade filtration, treatment systems, and field expertise to keep critical infrastructure operating smoothly.</p>
         <p>Whether addressing high-salinity brackish intake, delicate beverage standards, or strict pharmaceutical feed loops, we provide unified single-source reliability across hardware, chemicals, and service.</p>
-        <Link className="button button-primary" href="#contact">About Us<ArrowUpRight size={15} aria-hidden="true" /></Link>
+        <Link
+          className="button button-primary"
+          href="/about-us/"
+          scroll={true}
+        >
+          About Us<ArrowUpRight size={15} aria-hidden="true" />
+        </Link>
       </Reveal>
       <Reveal className="about-image" direction="right">
         <Image
@@ -180,6 +187,7 @@ function CallToAction() {
 export default function HomePage() {
   return (
     <>
+      <AboutHashRedirect />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationData).replace(/</g, "\\u003c") }} />
       <SiteHeader />
       <main id="main-content" tabIndex={-1}>

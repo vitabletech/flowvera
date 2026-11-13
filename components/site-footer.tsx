@@ -19,7 +19,7 @@ export function SiteFooter() {
           <div className="footer-col">
             <h2>Quick Links</h2>
             <Link href="/#home">Home</Link>
-            <Link href="/#about">About Us</Link>
+            <Link href="/about-us/" scroll={true}>About Us</Link>
             <Link href={serviceHref("specialty-chemicals")}>Specialty Chemicals</Link>
             <Link href="/spare-parts/">Spare Parts</Link>
             <Link href="/tanks/">Tanks</Link>
