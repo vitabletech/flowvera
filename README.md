@@ -17,7 +17,7 @@ In the repository's GitHub settings, set **Pages → Build and deployment → So
 
 ### Deployed build version
 
-Every successful `npm run build` runs a `postbuild` script that writes `out/version.json`. Both hosting destinations deploy it alongside the site; no version label is added to the UI. This is a public static file intended for developer inspection, not an authenticated endpoint, and contains no secrets.
+Every successful `npm run build` runs a `postbuild` script that writes `out/version.json`. Both hosting destinations deploy it alongside the site. Every page footer displays the build run and attempt (for example **Build 42.1**), matching the `build.42.1` suffix in the version file; development and local exports display **Local build**. The footer label is embedded at build time and needs no client request. Run numbers are scoped to each workflow, so use the commit and workflow URL in `version.json` when distinguishing builds from different workflows. This is a public static file intended for developer inspection, not an authenticated endpoint, and contains no secrets.
 
 - GoDaddy: `http://www.flowveraarabia.com/version.json`
 - GitHub Pages: `https://vitabletech.github.io/flowvera/version.json`
@@ -97,7 +97,9 @@ Validation uses `npm test` for build-version, carousel-loop and GoDaddy sync reg
 
 ## Products, requests and legal pages
 
-`/products/` lists six solution categories. Each `/products/[slug]/` page has application details, useful information to share and a product-specific enquiry form. The header, service cards, chemicals action and footer use the same catalog in `lib/services.ts`.
+`/products/` lists six solution categories. The five core service detail pages share a responsive design based on the supplied water-treatment reference: image hero, engineering and application overview, five solution cards, a four-stage process, performance features, contact action and office presence map. Each has its own application-specific copy and local images, configured in `lib/service-pages.ts`. The water-treatment page uses WebP delivery copies of the supplied `assets/services-page/` images in `public/assets/optimized/service-details/`; its small supplied icons are statically imported. The specialty-chemicals page retains its existing layout. The header, service cards, chemicals action and footer use the same catalog in `lib/services.ts`.
+
+The service pages reuse the homepage contact section. Email and WhatsApp shortcuts include the selected service, and **Prepare a project enquiry** expands the existing product-specific enquiry form without adding an always-visible form to the reference layout. Solution cards and the main contact action link to this section. The technical and commercial content should be reviewed by FlowVera before publication; equipment specifications, performance and service scope must be confirmed for each application.
 
 `/enquiry/` prepares general quotations; `/book-demo/` collects a solution, contact information and optional preferred date/time. Requests are previews only: the user must open WhatsApp or their email app and finish sending. Demo dates are not confirmed bookings. The site has no submission backend, request storage, automated confirmations or calendar integration. Inputs are held in page memory only and forms remain disabled until JavaScript is ready to prevent accidental native GET submissions. Editing invalidates the prepared message. No personal information is sent during validation; WhatsApp/email URLs contain the entered text only when the user chooses those channels.
 

@@ -40,7 +40,7 @@ export function SiteFooter() {
         </div>
       </div>
       <div className="footer-bottom">
-        <p>© {new Date().getFullYear()} FlowVera. All rights reserved.</p>
+        <p>© {new Date().getFullYear()} FlowVera. All rights reserved.<span className="footer-build-number">{process.env.NEXT_PUBLIC_BUILD_NUMBER}</span></p>
         <div className="footer-legal">
           <Link href="/terms/">Terms and Conditions</Link>
           <Link href="/privacy/">Privacy Policy</Link>

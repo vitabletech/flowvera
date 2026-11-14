@@ -1,13 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight, Check, Mail, Phone } from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { WhatsAppIcon } from "@/components/whatsapp-icon";
 import { SiteHeader } from "@/components/site-header";
 import { Reveal } from "@/components/reveal";
 import { ServicesCarousel } from "@/components/services-carousel";
 import { GalleryCarousel } from "@/components/gallery-carousel";
 import { ProcessVisual } from "@/components/process-visual";
-import { OfficeMap } from "@/components/office-map";
+import { ContactSection } from "@/components/contact-section";
 import { TrustedLogos } from "@/components/trusted-logos";
 import { assetPath } from "@/lib/asset-path";
 import { organizationData } from "@/lib/seo";
@@ -133,41 +133,6 @@ function ClientsSection() {
     <section className="clients-section" aria-label="Trusted industry partners">
       <Reveal><h2>Trusted by Industry leaders</h2></Reveal>
       <TrustedLogos />
-    </section>
-  );
-}
-
-function ContactSection() {
-  return (
-    <section className="contact-section" id="contact">
-      <Reveal className="contact-copy" direction="left">
-        <div>
-          <p className="eyebrow">GET IN TOUCH</p>
-          <h2>Let’s Talk About Your Water Treatment Needs.</h2>
-          <p className="contact-intro">Have a project in mind or need help finding the right solution? Tell us what you’re looking for. Our team is ready to help.</p>
-        </div>
-        <div className="help-list">
-          <h3>How Can We Help?</h3>
-          <p><Check size={17} />Help choosing the right solution</p>
-          <p><Check size={17} />Support with products and services</p>
-          <p><Check size={17} />Assistance with your requirements</p>
-        </div>
-        <div className="contact-shortcuts">
-          <a href="mailto:info@flowveraarabia.com" aria-label="Email FlowVera">
-            <Mail size={28} />
-            <span>Email Us <ArrowUpRight size={15} /></span>
-          </a>
-          <a href="tel:+966508607349" aria-label="Call FlowVera">
-            <Phone size={28} />
-            <span>Call Us <ArrowUpRight size={15} /></span>
-          </a>
-          <a href="https://wa.me/966508607349" target="_blank" rel="noreferrer" aria-label="Contact FlowVera on WhatsApp">
-            <WhatsAppIcon size={28} />
-            <span>WhatsApp <ArrowUpRight size={15} /></span>
-          </a>
-        </div>
-      </Reveal>
-      <Reveal direction="right"><OfficeMap /></Reveal>
     </section>
   );
 }
