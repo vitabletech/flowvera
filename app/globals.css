@@ -989,7 +989,7 @@ main { overflow: hidden; }
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 24px;
-  margin-top: -48px;
+  margin-top: 50px;
   margin-bottom: 72px;
   position: relative;
   z-index: 2;
