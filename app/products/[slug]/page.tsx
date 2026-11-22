@@ -7,7 +7,7 @@ import { services, serviceHref } from "@/lib/services";
 import { assetPath } from "@/lib/asset-path";
 import { pageMetadata } from "@/lib/seo";
 import { ServiceDetailPage } from "@/components/service-detail-page";
-import { servicePages } from "@/lib/service-pages";
+import { servicePages, specialtyChemicalsContent } from "@/lib/service-pages";
 
 export const dynamicParams = false;
 export function generateStaticParams() {
@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
   const service = await getService(params);
-  const content = servicePages[service.slug];
+  const content = servicePages[service.slug] ?? (service.slug === "specialty-chemicals" ? specialtyChemicalsContent : undefined);
   if (content) return <ServiceDetailPage title={service.title} content={content} />;
   return <ContentPage title={service.title} intro={service.description}>
     <div className="product-detail">

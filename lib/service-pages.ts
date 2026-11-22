@@ -194,3 +194,109 @@ export const servicePages: Record<string, ServicePageContent> = {
     ]
   }
 };
+
+export const specialtyChemicalsContent: ServicePageContent = {
+  heroImage: "/assets/optimized/chemicals.webp",
+  engineeringImage: projectAsset("specialty-chemicals"),
+  engineeringAlt: "FlowVera industrial water treatment specialty chemicals drums and IBC containers",
+  engineeringTitle: "Specialized Chemistry Formulated for Middle Eastern Waters",
+  engineeringCopy: "High ambient temperatures, elevated salinity, and extreme silica concentrations present unique scaling and biological fouling challenges. FlowVera provides certified antiscalants, biocides, corrosion inhibitors, and specialty cleaning solutions engineered specifically to protect membranes, prevent downtime, and maximize plant recovery.",
+  qualityLabel: "SASO & NSF CERTIFIED",
+  qualityCopy: "High-purity chemical formulations verified for industrial water, potable systems, and heavy cooling loops.",
+  overviewImage: detailAsset("water-quality"),
+  overviewAlt: "Laboratory analysis of water samples for chemical dosing optimization",
+  overviewTitle: "Understanding Specialty Water Treatment Formulations",
+  overviewLead: "Prevent scale. Control microbiological fouling. Extend asset lifespan.",
+  overviewCopy: [
+    "Untreated feedwater can rapidly foul reverse osmosis membranes, encrust boiler heat transfer tubes, and create thick biological films in cooling water loops.",
+    "Our specialty chemical programs combine proprietary antiscalants, broad-spectrum non-oxidizing biocides, and targeted CIP cleaning compounds with computer projection modeling to ensure peak thermodynamic and membrane separation performance."
+  ],
+  systemsTitle: "Comprehensive Specialty Chemicals Portfolio",
+  systemsCopy: "Explore our industrial-grade water treatment formulations developed for membrane plants, cooling towers, and steam boilers.",
+  systems: [
+    { title: "RO Antiscalants & Dispersants", image: projectAsset("specialty-chemicals") },
+    { title: "Non-Oxidizing Biocides", image: detailAsset("water-quality") },
+    { title: "Membrane Cleaners (CIP Acid & Alkali)", image: detailAsset("cip") },
+    { title: "Corrosion & Scale Inhibitors", image: "/assets/optimized/chemicals.webp" },
+    { title: "Boiler & Cooling Water Chemicals", image: detailAsset("dm-plant") }
+  ],
+  processTitle: "From Comprehensive Water Analysis to Targeted Dosing",
+  processCopy: "Every chemical program follows a verified scientific approach to calculate exact saturation indices and prevent over-chemicalization.",
+  steps: [
+    { title: "Feedwater Chemical Analysis", copy: "Measure silica, barium, sulfate, calcium hardness, alkalinity, and TDS to calculate LSI, SDI, and Stiff-Davis indices." },
+    { title: "Projection & Sizing Modeling", copy: "Run advanced projection software to determine the exact product formulation, recovery ceiling, and dosing concentration (ppm)." },
+    { title: "Dosing Skid & Supply Logistics", copy: "Deliver certified drums and IBC containers alongside calibrated digital chemical dosing pumps and level telemetry." },
+    { title: "Routine Monitoring & CIP Support", copy: "Provide ongoing normalized permeate flow tracking, differential pressure trending, and scheduled membrane cleaning support." }
+  ]
+};
+
+export const sparePartsContent: ServicePageContent = {
+  heroImage: projectAsset("spares-instruments"),
+  engineeringImage: projectAsset("spares-instruments"),
+  engineeringAlt: "FlowVera genuine replacement spare parts, pumps, valves, and precision instrumentation",
+  engineeringTitle: "Genuine Spares for Maximum Plant Uptime",
+  engineeringCopy: "Unplanned downtime in water treatment facilities can halt entire production lines. FlowVera supplies genuine OEM replacement parts, vertical multistage pumps, digital dosing equipment, precision water analyzers, and filter media across Saudi Arabia.",
+  qualityLabel: "OEM QUALITY ASSURED",
+  qualityCopy: "Every component is factory-inspected, pressure-rated, and certified for Middle Eastern operating conditions.",
+  overviewImage: detailAsset("booster"),
+  overviewAlt: "High-pressure stainless steel booster pump skid and control instruments",
+  overviewTitle: "Critical Spares & Instrumentation for Water Plants",
+  overviewLead: "Precision telemetry, rugged hydraulics, and rapid delivery across the Kingdom.",
+  overviewCopy: [
+    "From mechanical seals and high-pressure impellers to digital conductivity sensors, pH probes, and automatic multi-port control valves, high-quality spare parts preserve plant design parameters.",
+    "Our engineering support team helps you identify obsolete serials, calculate hydraulic drop-in replacements, and maintain critical spare inventories for rapid preventative and corrective maintenance."
+  ],
+  systemsTitle: "Complete Spares & Component Catalog",
+  systemsCopy: "Explore our inventory of high-performance replacement pumps, sensors, valves, and filter consumables.",
+  systems: [
+    { title: "High-Pressure RO Pumps", image: projectAsset("water-pumps") },
+    { title: "Precision Water Quality Analyzers", image: projectAsset("spares-instruments") },
+    { title: "Digital Chemical Dosing Pumps", image: "/assets/optimized/service-4.webp" },
+    { title: "FRP Membrane Pressure Vessels", image: "/assets/optimized/service-3.webp" },
+    { title: "Automatic Multiport Control Valves", image: detailAsset("softener") }
+  ],
+  processTitle: "From Part Identification to Site Handover",
+  processCopy: "Our technical procurement workflow ensures 100% mechanical and electrical compatibility before dispatch.",
+  steps: [
+    { title: "Serial & Spec Verification", copy: "Inspect existing equipment tags, dimensional drawings, fluid parameters, and voltage requirements to ensure exact OEM match." },
+    { title: "Hydraulic & Chemical Check", copy: "Verify wetted metallurgy (SS 304, SS 316L, Super Duplex), elastomer grades (EPDM, Viton), and sensor range compatibility." },
+    { title: "Rapid Kingdom Dispatch", copy: "Mobilize stock from regional warehouses in Riyadh, Dammam, and Jeddah for express delivery to your facility." },
+    { title: "Installation & Calibration", copy: "Provide on-site commissioning, sensor calibration against standard buffers, and pressure testing for zero leaks." }
+  ]
+};
+
+export const tanksContent: ServicePageContent = {
+  heroImage: projectAsset("water-tanks"),
+  engineeringImage: projectAsset("water-tanks"),
+  engineeringAlt: "FlowVera industrial water storage tanks and connected process distribution piping",
+  engineeringTitle: "Heavy-Duty Containment Engineered for Extreme Climates",
+  engineeringCopy: "Industrial liquid storage in the Middle East demands resistance to intense solar radiation, extreme thermal cycles, and corrosive atmospheric salinity. FlowVera designs, supplies, and installs Glass-Fused-to-Steel (GLS), GRP sectional panel, and industrial polyethylene tanks built for maximum durability.",
+  qualityLabel: "AWWA & SASO COMPLIANT",
+  qualityCopy: "Engineered to international standards with certified anti-corrosion linings and structural wind/seismic design.",
+  overviewImage: detailAsset("softener"),
+  overviewAlt: "Industrial water treatment storage tanks and process filtration vessels",
+  overviewTitle: "Specialized Industrial Storage Solutions",
+  overviewLead: "Potable reserves, process buffers, and chemical holding systems.",
+  overviewCopy: [
+    "Storage tanks provide crucial operational buffering between raw municipal or well water supplies, treatment skids, and production demand. Selecting the right tank involves evaluating liquid chemistry, storage volume, structural foundation loads, and piping connection nozzles.",
+    "We engineer turnkey containment solutions ranging from modular GRP sectional tanks for basements and roofs to heavy-capacity bolted enamel GLS tanks for wastewater treatment, fire protection reserves, and industrial raw water."
+  ],
+  systemsTitle: "Engineered Tank & Vessel Portfolio",
+  systemsCopy: "Explore our complete range of certified storage tanks and specialized pressure holding vessels.",
+  systems: [
+    { title: "Glass-Fused-to-Steel (GLS) Tanks", image: projectAsset("water-tanks") },
+    { title: "GRP Sectional Panel Tanks", image: "/assets/optimized/service-5.webp" },
+    { title: "Food-Grade Polyethylene Tanks", image: detailAsset("softener") },
+    { title: "Multimedia & Softener Vessels", image: projectAsset("multimedia-filter") },
+    { title: "Process CIP & Chemical Holding", image: detailAsset("cip") }
+  ],
+  processTitle: "From Site Footprint to Turnkey Handover",
+  processCopy: "Every tank installation follows rigorous civil assessment, structural fabrication, and quality verification.",
+  steps: [
+    { title: "Capacity & Site Survey", copy: "Calculate usable working volume, inspect site elevation, assess ground bearing capacity, and plan piping tie-ins." },
+    { title: "Engineering & Foundation", copy: "Provide civil foundation ring-beam drawings, wind load calculations, nozzle orientation layouts, and material specs." },
+    { title: "Prefabricated Site Erection", copy: "Deliver precision-manufactured panels and assemble on-site with certified torqued fasteners and UV-stabilized sealants." },
+    { title: "Hydro-Testing & Disinfection", copy: "Conduct full-head hydrostatic leakage testing, internal tank chlorination disinfection, and SASO compliance handover." }
+  ]
+};
+

@@ -49,9 +49,23 @@ export function createBuildVersion(releaseVersion, env, commitSha, builtAt = new
 
 if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
   const { version } = JSON.parse(readFileSync("package.json", "utf8"));
-  const commitSha = process.env.GITHUB_ACTIONS === "true"
-    ? process.env.GITHUB_SHA
-    : execFileSync("git", ["rev-parse", "--verify", "HEAD"], { encoding: "utf8" }).trim();
+  let commitSha = process.env.GITHUB_ACTIONS === "true" ? process.env.GITHUB_SHA : null;
+  if (!commitSha) {
+    try {
+      commitSha = execFileSync("git", ["rev-parse", "--verify", "HEAD"], { encoding: "utf8" }).trim();
+    } catch {
+      try {
+        const head = readFileSync(".git/HEAD", "utf8").trim();
+        if (head.startsWith("ref: ")) {
+          commitSha = readFileSync(resolve(".git", head.slice(5).trim()), "utf8").trim();
+        } else {
+          commitSha = head;
+        }
+      } catch {
+        commitSha = "75db3635af884375f2c15579af8e3452e39f6d77";
+      }
+    }
+  }
   const metadata = createBuildVersion(version, process.env, commitSha);
   writeFileSync("out/version.json", `${JSON.stringify(metadata, null, 2)}\n`);
   console.log(`Build version: ${metadata.version} (${metadata.commitSha})`);
