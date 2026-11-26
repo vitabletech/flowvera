@@ -1090,36 +1090,6 @@ main { overflow: hidden; }
   color: var(--muted);
   line-height: 1.65;
 }
-.contact-badge-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 14px;
-  border-radius: 20px;
-  background: #e8f8ee;
-  color: #1a9648;
-  font-size: 12px;
-  font-weight: 750;
-  margin-bottom: 16px;
-}
-.contact-badge-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #25d366;
-  animation: pulse 2s infinite;
-}
-.contact-shortcut-whatsapp {
-  background: #25d366 !important;
-  border-color: #25d366 !important;
-  color: white !important;
-}
-.contact-shortcut-whatsapp span {
-  color: white !important;
-}
-.contact-shortcut-whatsapp:hover {
-  background: #20ba59 !important;
-}
 .enquiry-panel {
   padding: 40px;
   border: 1px solid #cddde6;
@@ -1261,53 +1231,6 @@ main { overflow: hidden; }
 }
 .contact-main-wrap {
   padding-bottom: 96px;
-}
-.service-enquiry {
-  margin-top: 32px;
-  width: 100%;
-}
-.service-enquiry > summary {
-  list-style: none !important;
-  list-style-type: none !important;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 14px 22px;
-  border-radius: 12px;
-  background: #f0f7fb;
-  color: var(--blue);
-  font-size: 15px;
-  font-weight: 700;
-  cursor: pointer;
-  border: 1px solid rgba(44, 119, 167, 0.25);
-  transition: all 0.2s ease;
-  user-select: none;
-}
-.service-enquiry > summary::-webkit-details-marker {
-  display: none !important;
-}
-.service-enquiry > summary::marker {
-  display: none !important;
-  content: "" !important;
-}
-.service-enquiry > summary:hover {
-  background: #e3eef5;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0, 31, 63, 0.08);
-}
-.service-enquiry > summary svg {
-  display: inline-block;
-  vertical-align: middle;
-  flex-shrink: 0;
-}
-.service-enquiry > summary:focus-visible {
-  outline: 3px solid var(--blue);
-  outline-offset: 4px;
-}
-.service-enquiry[open] > summary {
-  background: white;
-  border-color: var(--blue);
-  margin-bottom: 24px;
 }
 @media (max-width: 1024px) {
   .contact-quick-strip {

@@ -52,39 +52,6 @@
 .service-page .service-cta { padding-block: 96px; }
 .service-page .service-cta h2 { font-size: 60px; line-height: 1; letter-spacing: -.04em; max-width: 800px; }
 .service-page .service-cta p { max-width: 672px; }
-.service-page .contact-section { gap: 40px; grid-template-columns: minmax(0, 1fr) minmax(0, 588px); }
-.service-page .contact-intro { color: var(--service-muted); }
-.service-page .help-list p { color: var(--service-muted); }
-.service-page .contact-shortcuts { gap: 24px; }
-.service-page .contact-shortcuts a { width: 134px; flex-basis: 134px; }
-.service-enquiry { margin-top: 32px; width: 100%; }
-.service-enquiry > summary {
-  list-style: none;
-  list-style-type: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 14px 22px;
-  border-radius: 12px;
-  background: #f0f7fb;
-  color: var(--blue);
-  font-size: 15px;
-  font-weight: 700;
-  cursor: pointer;
-  border: 1px solid rgba(44, 119, 167, 0.25);
-  transition: all 0.2s ease;
-  user-select: none;
-}
-.service-enquiry > summary::-webkit-details-marker { display: none !important; }
-.service-enquiry > summary::marker { display: none !important; content: ""; }
-.service-enquiry > summary:hover { background: #e3eef5; transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0, 31, 63, 0.08); }
-.service-enquiry > summary svg { display: inline-block; vertical-align: middle; flex-shrink: 0; }
-.service-enquiry > summary:focus-visible { outline: 3px solid var(--blue); outline-offset: 4px; }
-.service-enquiry[open] > summary { background: white; border-color: var(--blue); margin-bottom: 24px; }
-.service-enquiry .enquiry-panel { margin-block: 0 16px; }
-.service-enquiry .enquiry-panel h2 { font-size: 28px; }
-.service-enquiry .enquiry-panel fieldset { grid-template-columns: 1fr; }
-.service-enquiry .enquiry-panel :is(input, textarea) { min-width: 0; width: 100%; }
 .service-page .footer-brand-col > p { max-width: 373px; }
 
 @media (min-width: 1024px) {
@@ -95,13 +62,8 @@
 @media (max-width: 1250px) {
   .service-intro-row, .service-intro-row-reverse { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px; }
   .service-step-grid { gap: 20px; }
-  .service-page .contact-section { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .service-page .contact-shortcuts { gap: 12px; }
-  .service-page .contact-shortcuts a { width: calc((100% - 24px) / 3); flex-basis: calc((100% - 24px) / 3); }
 }
 @media (max-width: 1023px) {
-  .service-page .contact-section { display: flex; }
-  .service-page .contact-shortcuts { max-width: 450px; }
   .service-step-grid, .service-value-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .service-step, .service-value { min-height: 280px; }
   .service-system-card h3 { font-size: 20px; line-height: 26px; }
@@ -142,10 +104,6 @@
   .service-value > img { margin-bottom: 20px; }
   .service-page .service-cta { padding: 72px 20px; }
   .service-page .service-cta h2 { font-size: 40px; line-height: 1.08; }
-  .service-page .contact-section { gap: 40px; }
-  .service-page .contact-copy h2 { font-size: 30px; line-height: 1.3; }
-  .service-page .contact-shortcuts { gap: 10px; }
-  .service-page .contact-shortcuts a { width: calc((100% - 20px) / 3); flex-basis: calc((100% - 20px) / 3); }
 }
 @media (prefers-reduced-motion: reduce) {
   .service-system-image img { transition: none; }
